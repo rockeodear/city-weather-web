@@ -17,6 +17,7 @@ registerMap('province', allProvince);
 
 
 onMounted(async () => {
+  debugger
   // 先获取当前位置
   await getCurrentLocation();
   // 更新天气信息
@@ -177,7 +178,7 @@ const labelFormatter = (params) => {
 const chartOption = computed(() => {
 
   return {
-    animation: false,
+    animation: true,
     progressive: 2000, // 增量渲染阈值
     progressiveThreshold: 5000, // 启用渐进渲染的数据量阈值
     tooltip: {
@@ -230,12 +231,12 @@ const chartOption = computed(() => {
           show: true,
           formatter: labelFormatter,
           distance: 10,
-          fontSize: 8
+          fontSize: 13
         },
         emphasis: {
           label: {
             show: true,
-            fontSize: 8
+            fontSize: 13
           }
         },
         zoom: unref(currentZoom.value),
@@ -248,6 +249,7 @@ const chartOption = computed(() => {
         }
       },
       {
+        animation: false,
         name: '省级边界',
         seriesId: '省级边界',
         type: 'map',
@@ -306,6 +308,7 @@ const getCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
           (position) => {
+
             const {latitude, longitude} = position.coords;
             currentPosition.value = [longitude, latitude];
             centerPosition.value = currentPosition.value
